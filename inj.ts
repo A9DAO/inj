@@ -7,7 +7,7 @@ import {
 } from '@injectivelabs/sdk-ts'
 import { MsgSend } from '@injectivelabs/sdk-ts'
 import { BigNumberInBase, DEFAULT_STD_FEE } from '@injectivelabs/utils'
-import { pk } from './pk'
+import { pk, times } from './pk'
 
 /** MsgSend Example */
 
@@ -90,4 +90,4 @@ async function start(pk: string, times: number) {
 }
 
 
-start(pk, 1);
+start(pk, times);
