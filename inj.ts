@@ -36,7 +36,7 @@ async function start(pk: string, times: number) {
 
     /** Prepare the Message */
     const amount = {
-        amount: new BigNumberInBase(0.003).toWei().toFixed(),
+        amount: new BigNumberInBase(0.03).toWei().toFixed(),
         denom: 'inj',
     }
 
