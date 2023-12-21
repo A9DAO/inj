@@ -8,7 +8,7 @@ import {
 } from '@injectivelabs/sdk-ts'
 import { MsgSend } from '@injectivelabs/sdk-ts'
 import { BigNumberInBase, DEFAULT_STD_FEE } from '@injectivelabs/utils'
-import { endTime, pk, startTime, times } from './pk'
+import { endTime, pk, startTime, times, toAddress } from './pk'
 
 /** MsgSend Example */
 
@@ -22,7 +22,6 @@ async function start(pk: string, times: number) {
     const privateKey = PrivateKey.fromMnemonic(pk)
     const injectiveAddress = privateKey.toBech32()
     const publicKey = privateKey.toPublicKey().toBase64()
-    const toAddress = 'inj166zrwnezgts7k4qugt9896j2n3m0gddj976qj4'
 
     /** Account Details **/
     const accountDetails = await new ChainRestAuthApi(lcd).fetchAccount(
@@ -53,7 +52,7 @@ async function start(pk: string, times: number) {
     async function doIt() {
         const latestBlock = await chainRestTendermintApi.fetchLatestBlock();
         if(Number(latestBlock.header.height) >= startTime){
-            console.log('开始了')
+            console.log(`当前：${latestBlock.header.height} 距离结束：${endTime - Number(latestBlock.header.height)}`)
         } else if (Number(latestBlock.header.height) >= endTime) {
             console.log('结束了')
             return
