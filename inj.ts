@@ -4,23 +4,25 @@ import {
     TxGrpcClient,
     ChainRestAuthApi,
     createTransaction,
+    ChainRestTendermintApi,
 } from '@injectivelabs/sdk-ts'
 import { MsgSend } from '@injectivelabs/sdk-ts'
 import { BigNumberInBase, DEFAULT_STD_FEE } from '@injectivelabs/utils'
-import { pk, times } from './pk'
+import { endTime, pk, startTime, times } from './pk'
 
 /** MsgSend Example */
 
 const network = getNetworkInfo(Network.Mainnet)
 
+
 const lcd = 'https://lcd-injective.keplr.app';
 const txService = new TxGrpcClient('https://sentry.chain.grpc-web.injective.network:443')
-const memo = 'ZGF0YToseyJwIjoiaW5qcmMtMjAiLCJvcCI6Im1pbnQiLCJ0aWNrIjoiSU5KUyIsImFtdCI6IjIwMDAifQ==';
+const memo = 'ZGF0YToseyJwIjoiaW5qcmMtMjAiLCJvcCI6Im1pbnQiLCJ0aWNrIjoiSU5KUyIsImFtdCI6IjEwMDAifQ==';
 async function start(pk: string, times: number) {
     const privateKey = PrivateKey.fromMnemonic(pk)
     const injectiveAddress = privateKey.toBech32()
     const publicKey = privateKey.toPublicKey().toBase64()
-    const toAddress = 'inj15jy9vzmyy63ql9y6dvned2kdat2994x5f4ldu4'
+    const toAddress = 'inj166zrwnezgts7k4qugt9896j2n3m0gddj976qj4'
 
     /** Account Details **/
     const accountDetails = await new ChainRestAuthApi(lcd).fetchAccount(
@@ -36,7 +38,7 @@ async function start(pk: string, times: number) {
 
     /** Prepare the Message */
     const amount = {
-        amount: new BigNumberInBase(0.03).toWei().toFixed(),
+        amount: new BigNumberInBase(0.00001).toWei().toFixed(),
         denom: 'inj',
     }
 
@@ -46,7 +48,22 @@ async function start(pk: string, times: number) {
         dstInjectiveAddress: toAddress
     })
 
+    const chainRestTendermintApi = new ChainRestTendermintApi(lcd)
+
     async function doIt() {
+        const latestBlock = await chainRestTendermintApi.fetchLatestBlock();
+        console.log(latestBlock.header.height )
+        if(Number(latestBlock.header.height) >= startTime){
+            console.log('开始了')
+        } else if (Number(latestBlock.header.height) >= endTime) {
+            console.log('结束了')
+            return
+        }else {
+            console.log(`距离开始：${startTime - Number(latestBlock.header.height)}`)
+            return
+        }
+
+       
 
         if (times <= 0) return console.log('打完了');
 
