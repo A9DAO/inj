@@ -51,7 +51,7 @@ async function start(pk: string, times: number) {
 
     async function doIt() {
         const latestBlock = await chainRestTendermintApi.fetchLatestBlock();
-        if(Number(latestBlock.header.height) >= startTime){
+        if(Number(latestBlock.header.height) >= startTime && Number(latestBlock.header.height) < endTime){
             console.log(`当前：${latestBlock.header.height} 距离结束：${endTime - Number(latestBlock.header.height)}`)
         } else if (Number(latestBlock.header.height) >= endTime) {
             console.log('结束了')
@@ -60,6 +60,7 @@ async function start(pk: string, times: number) {
             console.log(`当前：${latestBlock.header.height} 距离开始：${startTime - Number(latestBlock.header.height)}`)
             return doIt()
         }
+        
 
        
 

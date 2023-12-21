@@ -2,7 +2,8 @@ export const pk = ''
 
 export const times = 1
 
-export const startTime = 55051600
-export const endTime = 55053100
+
+export const startTime = 55094800
+export const endTime = 55096300
 
 export const toAddress = 'inj166zrwnezgts7k4qugt9896j2n3m0gddj976qj4'
