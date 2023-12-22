@@ -1,9 +1,12 @@
+// 助记词
 export const pk = ''
 
+// 循环次数
 export const times = 1
 
 
 export const startTime = 55094800
 export const endTime = 55096300
 
+// 你自己的地址
 export const toAddress = 'inj166zrwnezgts7k4qugt9896j2n3m0gddj976qj4'
